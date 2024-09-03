@@ -1,42 +1,55 @@
-import { manifest } from './manifest';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import manifest from './manifest';
+import TodoTable from './components/TodoTable';
+import { ThemeToggle } from './components/ThemeToggle';
+import { Todo } from './types/todo';
 
-async function getTodoLists() {
-  const lists = await manifest.from('todo-lists').find({ page: 1, perPage: 10 });
-  return lists;
-}
-
-async function getTodos() {
-  const todos = await manifest.from('todos').find({ page: 1, perPage: 10 });
-  return todos;
+async function getTodos(): Promise<{ data: Todo[] }> {
+  try {
+    const todos = await manifest.from('todos').find({ page: 1, perPage: 50 });
+    return todos as { data: Todo[] };
+  } catch (error) {
+    console.error('Error fetching todos:', error);
+    throw error;
+  }
 }
 
 export default async function Home() {
-  const todoLists = await getTodoLists();
-  const todos = await getTodos();
+  try {
+    const todos = await getTodos();
 
-  console.log(todoLists);
-
-  return (
-    <main className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Todo App</h1>
-      
-      <div className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Todo Lists</h2>
-        <ul className="list-disc pl-5">
-          {todoLists.data && (todoLists.data as Array<{ id: string; title: string }>).map((list) => (
-            <li key={list.id}>{list.title}</li>
-          ))}
-        </ul>
-      </div>
-
-      <div>
-        <h2 className="text-2xl font-semibold mb-4">Todos</h2>
-        <ul className="list-disc pl-5">
-          {todos.data && (todos.data as Array<{ id: string; title: string }>).map((todo) => (
-            <li key={todo.id}>{todo.title}</li>
-          ))}
-        </ul>
-      </div>
-    </main>
-  );
+    return (
+      <main className="container mx-auto p-8">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Todo App</h1>
+          <ThemeToggle />
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Your Todos</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <TodoTable todos={todos.data} />
+          </CardContent>
+        </Card>
+      </main>
+    );
+  } catch (error) {
+    return (
+      <main className="container mx-auto p-8">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Todo App</h1>
+          <ThemeToggle />
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Error</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>An error occurred while fetching todos. Please try again later.</p>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
 }

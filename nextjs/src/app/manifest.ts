@@ -1,3 +1,5 @@
 import Manifest from "@mnfst/sdk";
 
-export const manifest = new Manifest();
+const manifest = new Manifest();
+
+export default manifest;
