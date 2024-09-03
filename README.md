@@ -1,4 +1,3 @@
-
 <div align="center">
   <img src="https://github.com/user-attachments/assets/7afad85a-b285-4bd0-b36a-43f7558e2838" alt="todo app">
 </div>
