@@ -1,0 +1,13 @@
+name: TODO MVC Application
+
+entities:
+  Todo:
+    properties:
+      - {name: "title", type: string}
+      - {name: "completed", type: boolean}
+      - {name: "order", type: number}
+      - {name: "createdAt", type: timestamp}
+  TodoList:
+    properties:
+      - {name: "title", type: string}
+      - {name: "createdAt", type: timestamp}
