@@ -1,13 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import manifest from '../manifest'
+import Manifest from "@mnfst/sdk";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { Todo } from '../types/todo'
 import { format } from 'date-fns'
 import { Alert, AlertDescription } from "@/components/ui/alert"
+
+const manifest = new Manifest();
 
 interface TodoTableProps {
   todos: Todo[]
@@ -27,7 +29,6 @@ export default function TodoTable({ todos: initialTodos }: TodoTableProps) {
     } catch (error) {
       console.error('Failed to update todo:', error)
       setError('Failed to update todo. Please try again later.')
-      // The state remains unchanged, so the old state is preserved
     }
   }
 
