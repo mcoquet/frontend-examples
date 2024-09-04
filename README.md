@@ -30,3 +30,27 @@ All frontends share the common Manifest backend API and use the Manifest JS SDK.
 ├── package-lock.json
 └── .gitignore
 ```
+
+## Available Demos
+
+- [Next.js Todo App](./nextjs/README.md)
+
+## Prerequisites
+
+Before running any of the demos, ensure you have the following installed:
+- Node.js (version 14 or later recommended)
+- npm (usually comes with Node.js)
+
+## Running the Manifest Backend
+
+1. Install the dependencies:
+   ```
+   npm install
+   ```
+
+2. From the root directory of the project run the following command
+   ```
+   npm run manifest
+   ```
+
+Note: A sample database has already been initialized and included in this repository. You can find it at `manifest/backend.db`.
