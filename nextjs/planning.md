@@ -19,6 +19,8 @@
 6. Improved architecture:
    - Moved API calls into a centralized module
    - Refined data types and their usage across the app
+7. Sorting:
+   - Implemented ability to sort todos (e.g., by creation date, alphabetically)
 
 ## Unfinished Objectives
 
@@ -32,9 +34,8 @@
 3. Pagination:
    - Implement pagination for the todo list
 
-4. Filtering and Sorting:
+4. Filtering:
    - Add ability to filter todos (e.g., by completion status)
-   - Add ability to sort todos (e.g., by creation date, alphabetically)
 
 5. Edit Functionality:
    - Allow users to edit existing todo titles
