@@ -4,6 +4,7 @@ entities:
   Todo:
     properties:
       - {name: "title", type: string}
+      - {name: "description", type: string} # Add this line
       - {name: "completed", type: boolean}
       - {name: "order", type: number}
       - {name: "createdAt", type: timestamp}

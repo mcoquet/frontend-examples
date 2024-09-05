@@ -2,12 +2,10 @@
 
 import { useState } from 'react'
 import Manifest from "@mnfst/sdk";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Button } from "@/components/ui/button"
-import { Todo } from '../types/todo'
-import { format } from 'date-fns'
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Todo } from '../types/todo'
+import TodoItem from './TodoItem'
 
 const manifest = new Manifest();
 
@@ -32,10 +30,6 @@ export default function TodoTable({ todos: initialTodos }: TodoTableProps) {
     }
   }
 
-  const formatDate = (date: string | number) => {
-    return format(date, 'MM/dd/yyyy, HH:mm:ss')
-  }
-
   return (
     <>
       {error && (
@@ -54,26 +48,7 @@ export default function TodoTable({ todos: initialTodos }: TodoTableProps) {
         </TableHeader>
         <TableBody>
           {todos.map((todo) => (
-            <TableRow key={todo.id}>
-              <TableCell>{todo.title}</TableCell>
-              <TableCell>{todo.description}</TableCell>
-              <TableCell>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    checked={todo.completed}
-                    onCheckedChange={(checked) => toggleTodo(todo.id, checked as boolean)}
-                  />
-                  <Button 
-                    variant={todo.completed ? "outline" : "default"}
-                    size="sm"
-                    onClick={() => toggleTodo(todo.id, !todo.completed)}
-                  >
-                    {todo.completed ? 'Done' : 'Not Done'}
-                  </Button>
-                </div>
-              </TableCell>
-              <TableCell>{formatDate(todo.createdAt.toString())}</TableCell>
-            </TableRow>
+            <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} />
           ))}
         </TableBody>
       </Table>
