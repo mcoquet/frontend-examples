@@ -1,7 +1,7 @@
 import React from 'react';
 import { TableCell, TableRow } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Todo } from '../../../types';
+import { Todo } from '../types/todo';
 import { format } from 'date-fns'
 
 interface TodoItemProps {
