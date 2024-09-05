@@ -1,57 +1,57 @@
 'use client'
 
-import { useState } from 'react'
-import Manifest from "@mnfst/sdk";
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
+import { ArrowUpDown } from "lucide-react"
 import { Todo } from '../types/todo'
 import TodoItem from './TodoItem'
-
-const manifest = new Manifest();
+import { SortOrder } from '../lib/api'
 
 interface TodoTableProps {
-  todos: Todo[]
+  todos: Todo[];
+  onTodoToggle: (id: number, completed: boolean) => void;
+  onTodoDelete: (id: number) => void;
+  onSort: (column: keyof Todo) => void;
+  sortBy: keyof Todo;
+  sortOrder: SortOrder;
 }
 
-export default function TodoTable({ todos: initialTodos }: TodoTableProps) {
-  const [todos, setTodos] = useState(initialTodos)
-  const [error, setError] = useState<string | null>(null)
-
-  const toggleTodo = async (id: string, completed: boolean) => {
-    try {
-      await manifest.from('todos').update(parseInt(id, 10), { completed })
-      setTodos(todos.map(todo => 
-        todo.id === id ? { ...todo, completed } : todo
-      ))
-      setError(null)
-    } catch (error) {
-      console.error('Failed to update todo:', error)
-      setError('Failed to update todo. Please try again later.')
-    }
-  }
+export default function TodoTable({ todos, onTodoToggle, onTodoDelete, onSort, sortBy, sortOrder }: TodoTableProps) {
+  const SortableHeader = ({ column, children }: { column: keyof Todo, children: React.ReactNode }) => (
+    <TableHead>
+      <Button variant="ghost" onClick={() => onSort(column)}>
+        {children}
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    </TableHead>
+  );
 
   return (
-    <>
-      {error && (
-        <Alert variant="destructive" className="mb-4">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
-      <Table>
-        <TableHeader>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <SortableHeader column="completed">Status</SortableHeader>
+          <SortableHeader column="title">Title</SortableHeader>
+          <SortableHeader column="createdAt">Created At</SortableHeader>
+          <TableHead className="text-right">Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {todos.length > 0 ? (
+          todos.map((todo) => (
+            <TodoItem 
+              key={todo.id} 
+              todo={todo} 
+              onToggle={onTodoToggle} 
+              onDelete={onTodoDelete}
+            />
+          ))
+        ) : (
           <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Created At</TableHead>
+            <TableCell colSpan={4} className="text-center">No todos found</TableCell>
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {todos.map((todo) => (
-            <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} />
-          ))}
-        </TableBody>
-      </Table>
-    </>
-  )
+        )}
+      </TableBody>
+    </Table>
+  );
 }

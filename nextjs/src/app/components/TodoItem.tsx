@@ -1,37 +1,34 @@
-import React from 'react';
 import { TableCell, TableRow } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Todo } from '../types/todo';
-import { format } from 'date-fns'
+import { Button } from "@/components/ui/button"
+import { Todo } from '../types/todo'
 
 interface TodoItemProps {
   todo: Todo;
-  onToggle: (id: string, completed: boolean) => void;
+  onToggle: (id: number, completed: boolean) => void;
+  onDelete: (id: number) => void;
 }
 
-const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle }) => {
-  const formatDate = (date: string | number) => {
-    return format(new Date(date), 'MM/dd/yyyy, HH:mm:ss')
-  }
-
-  const completedStyle = todo.completed ? 'line-through opacity-60' : '';
+export default function TodoItem({ todo, onToggle, onDelete }: TodoItemProps) {
+  const completedStyle = todo.completed ? 'line-through text-gray-500' : '';
 
   return (
-    <TableRow className={completedStyle}>
-      <TableCell>{todo.title}</TableCell>
-      <TableCell>{todo.description || '-'}</TableCell>
+    <TableRow>
       <TableCell>
-        <div className="flex items-center justify-center w-6 h-6">
-          <Checkbox
-            checked={todo.completed}
-            onCheckedChange={(checked) => onToggle(todo.id, checked as boolean)}
-            className="w-4 h-4"
-          />
-        </div>
+        <Checkbox
+          checked={todo.completed}
+          onCheckedChange={(checked) => onToggle(todo.id, checked as boolean)}
+        />
       </TableCell>
-      <TableCell>{formatDate(todo.createdAt)}</TableCell>
+      <TableCell className={completedStyle}>
+        {todo.title}
+      </TableCell>
+      <TableCell className={completedStyle}>
+        {new Date(todo.createdAt).toLocaleString()}
+      </TableCell>
+      <TableCell className="text-right">
+        <Button variant="destructive" onClick={() => onDelete(todo.id)}>Delete</Button>
+      </TableCell>
     </TableRow>
-  );
-};
-
-export default TodoItem;
+  )
+}
