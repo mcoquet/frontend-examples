@@ -1,5 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import TodoList from './components/TodoList';
+import TodoListHeader from './components/TodoListHeader';
 import { ThemeToggle } from './components/ThemeToggle';
 import Footer from './components/Footer';
 
@@ -11,9 +12,7 @@ export default function Home() {
         <ThemeToggle />
       </div>
       <Card className="flex-grow">
-        <CardHeader>
-          <CardTitle>Your Todos</CardTitle>
-        </CardHeader>
+        <TodoListHeader />
         <CardContent>
           <TodoList />
         </CardContent>

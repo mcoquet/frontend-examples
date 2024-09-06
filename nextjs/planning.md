@@ -6,6 +6,7 @@
    - Displaying todos in a table
    - Adding new todos
    - Toggling todo completion status
+   - Deleting todos
 
 2. Components created:
    - TodoList (main component managing state)
@@ -21,6 +22,16 @@
    - Refined data types and their usage across the app
 7. Sorting:
    - Implemented ability to sort todos (e.g., by creation date, alphabetically)
+
+8. Todo Lists UI and Management:
+   - Created TodoListHeader component
+   - Implemented dropdown for selecting different todo lists
+   - Added ability to create new todo lists from the UI
+   - Enabled editing of todo list names
+   - Implemented backend integration for loading multiple todo lists
+   - Added backend functionality to create new todo lists
+   - Implemented backend integration for updating todo list names
+   - Added automatic creation of a default todo list if none exist
 
 ## Unfinished Objectives
 
@@ -40,13 +51,15 @@
 5. Edit Functionality:
    - Allow users to edit existing todo titles
 
-6. Delete Functionality:
-   - Allow users to delete todos
-
-7. Authentication:
+6. Authentication:
    - Implement authentication for the app
    - Allow users to sign up, sign in, and sign out
 
-8. Authorization:
+7. Authorization:
    - Implement authorization for the app
    - Allow users to only edit their own todos
+
+8. Todo Lists Management:
+   - Allow users to delete existing todo lists
+   - Modify TodoList component to load todos for a specific list
+   - Update TodoList and CreateTodoInput components to work with selected todo list
