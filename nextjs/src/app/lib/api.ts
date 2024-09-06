@@ -3,7 +3,6 @@ import { Todo } from '../types/todo';
 import { TodoList } from '../types/todoList';
 
 const manifest = new Manifest();
-global.manifest = manifest;
 
 export type SortOrder = 'asc' | 'desc';
 
